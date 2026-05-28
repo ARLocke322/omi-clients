@@ -15,8 +15,8 @@ class IfpiClient < Literal::Object
 
   class RateLimitError < StandardError; end
 
-  prop :token, _String?
-  prop :token_fetched_at, _String?
+  prop :token, _String?, reader: :public
+  prop :token_fetched_at, _Time?, reader: :public
 
   def login!
     resp = request(
