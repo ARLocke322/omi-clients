@@ -15,7 +15,7 @@ RSpec.describe IfpiClient do
       ).and_return({ 'token' => 'fake_token' })
 
       expect(client.login!).to eq(client)
-      expect(client.instance_variable_get(:@token)).to eq('fake_token')
+      expect(client.token).to eq('fake_token')
     end
   end
 
@@ -25,8 +25,7 @@ RSpec.describe IfpiClient do
     end
 
     it 'makes post request when logged in' do
-      client.instance_variable_set(:@token, 'fake_token')
-      client.instance_variable_set(:@token_fetched_at, Time.now)
+      client = described_class.new(token: 'fake_token', token_fetched_at: Time.now)
 
       allow(client).to receive(:request).and_return({ 'results' => [] })
       expect(client.search_recordings).to eq({ 'results' => [] })

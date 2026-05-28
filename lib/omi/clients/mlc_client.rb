@@ -19,7 +19,7 @@ class MlcClient
       base: API_2_BASE,
       path: 'search/works',
       query: { page:, size: },
-      body: { title:, writerFullNames: writer_names }.compact.to_json
+      body: { combinedTitles: title, writerFullNames: writer_names }.compact.to_json
     )
   end
 

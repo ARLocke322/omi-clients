@@ -13,8 +13,10 @@ class IfpiClient < Literal::Object
                'Chrome/138.0.0.0 Safari/537.36'
   TOKEN_TTL  = 3600
 
-  prop :token, _String?
-  prop :token_fetched_at, _String?
+  class RateLimitError < StandardError; end
+
+  prop :token, _String?, reader: :public
+  prop :token_fetched_at, _Time?, reader: :public
 
   def login!
     resp = request(
@@ -42,6 +44,12 @@ class IfpiClient < Literal::Object
   end
 
   private
+
+  def handle_response(res)
+    raise RateLimitError, '429 rate limited' if res.code == '429'
+
+    super
+  end
 
   def build_search_payload(**kwargs)
     {
