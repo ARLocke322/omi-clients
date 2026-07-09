@@ -11,7 +11,7 @@ RSpec.describe MlcClient do
       base: MlcClient::API_2_BASE,
       path: 'search/works',
       query: { page: 1, size: 100 },
-      body: { title: 'Test Title' }.to_json
+      body: { combinedTitles: 'Test Title' }.to_json
     ).and_return({ 'results' => [] })
 
     expect(client.search_works('Test Title')).to eq({ 'results' => [] })
